@@ -1,44 +1,22 @@
 #include <bits/stdc++.h>
 using namespace std;
-#include <atcoder/dsu>
-using namespace atcoder;
+// #include <atcoder/all>
+// using namespace atcoder;
 
 int main() {
-    long long n, m;
-    cin >> n >> m;
-    vector<vector<pair<long long, long long>>> G(n);
-    set<int> st;
-    while (m--) {
-        long long u, v, w;
-        cin >> u >> v >> w;
-        u--;
-        v--;
-        G[u].push_back({v, w});
-        d.merge(u, v);
-    }
+    int n;
+    cin >> n;
+    vector<int> a(n);
+    for (auto &i : a) cin >> i;
 
-    const long long inf = 1e18;
-    vector<long long> dist(n, -inf);
-    queue<long long> q;
-    for (long long i = 0; i < n; i++) {
-        int origin = d.leader(i);
-        dist[origin] = 0;
-        q.push(origin);
-    }
-
-    while(!q.empty()) {
-        long long u = q.front();
-        q.pop();
-        for (long long i = 0; i < G[u].size(); i++) {
-            auto [v, d] = G[u][i];
-            if (dist[v] != -inf) continue;
-            dist[v] = dist[u] + d;
-            q.push(v);
+    int ans = 0;
+    for (int m = 1; m <= 1e6; m++) {
+        int sum = 0;
+        for (auto i : a) {
+            sum += (m % i);
         }
+        ans = max(ans, sum);
     }
 
-    for (long long i = 0; i < n; i++) {
-        printf("%lld ", dist[i]);
-    }
-    cout << "\n";   
+    cout << ans << "\n";
 }
